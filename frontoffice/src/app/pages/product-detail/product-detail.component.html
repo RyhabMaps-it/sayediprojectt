@@ -1,0 +1,186 @@
+@if (loading()) {
+  <div class="container section">
+    <div class="detail-layout">
+      <div>
+        <div class="skeleton" style="aspect-ratio: 4/5; border-radius: var(--radius-md);"></div>
+        <div class="thumbs">
+          @for (i of [1,2,3]; track i) {
+            <div class="skeleton" style="width: 72px; height: 72px; border-radius: var(--radius-sm);"></div>
+          }
+        </div>
+      </div>
+      <div>
+        <div class="skeleton" style="width: 100px; height: 22px; border-radius: 999px; margin-bottom: 16px;"></div>
+        <div class="skeleton" style="width: 80%; height: 34px; margin-bottom: 20px;"></div>
+        <div class="skeleton" style="width: 40%; height: 22px; margin-bottom: 24px;"></div>
+        <div class="skeleton" style="height: 90px; margin-bottom: 24px;"></div>
+        <div class="skeleton" style="height: 160px;"></div>
+      </div>
+    </div>
+  </div>
+} @else if (!product()) {
+  <div class="container section">
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/></svg>
+      </div>
+      <p>{{ 'product.notFound' | t }}</p>
+      <a routerLink="/boutique" class="btn btn-outline" style="margin-top: 16px;">{{ 'common.backToShop' | t }}</a>
+    </div>
+  </div>
+} @else {
+  <section class="section">
+    <div class="container">
+      <a routerLink="/boutique" class="back-link">{{ 'product.backToShop' | t }}</a>
+
+      <div class="detail-layout">
+        <div class="gallery">
+          <div class="main-image">
+            <img [src]="imageUrl(product()!.images[activeImageIndex()])" [alt]="product()!.name" />
+          </div>
+          @if (product()!.images.length > 1) {
+            <div class="thumbs">
+              @for (img of product()!.images; track $index) {
+                <button
+                  class="thumb"
+                  [class.active]="activeImageIndex() === $index"
+                  (click)="selectImage($index)"
+                >
+                  <img [src]="imageUrl(img)" [alt]="product()!.name" />
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="info">
+          <span class="category-tag">{{ product()!.categoryName }}</span>
+          <h1>{{ product()!.name }}</h1>
+          <app-price [price]="product()!.price" [priceOnRequest]="product()!.priceOnRequest"></app-price>
+
+          <p class="description">{{ product()!.description }}</p>
+
+          <table class="specs">
+            <tbody>
+              <tr>
+                <th>{{ 'product.material' | t }}</th>
+                <td>{{ product()!.material }}</td>
+              </tr>
+              <tr>
+                <th>{{ 'product.dimensions' | t }}</th>
+                <td>{{ 'product.dimensionsValue' | t: { h: product()!.heightCm, w: product()!.widthCm, d: product()!.depthCm } }}</td>
+              </tr>
+              <tr>
+                <th>{{ 'product.colors' | t }}</th>
+                <td>{{ product()!.colorOptions }}</td>
+              </tr>
+              <tr>
+                <th>{{ 'product.reference' | t }}</th>
+                <td>{{ product()!.sku }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          @if (isArchitect && product()!.hasTechnicalSheet) {
+            <button class="btn btn-outline sheet-btn" (click)="downloadTechnicalSheet()" [disabled]="downloadingSheet()">
+              {{ (downloadingSheet() ? 'product.downloading' : 'product.downloadSheet') | t }}
+            </button>
+          }
+
+          @if (!product()!.priceOnRequest && product()!.price !== null) {
+            @if (product()!.colors.length) {
+              <div class="color-selector">
+                <label>{{ 'product.colors' | t }}</label>
+                <div class="color-swatches">
+                  @for (color of product()!.colors; track color.id) {
+                    <button
+                      type="button"
+                      class="swatch"
+                      [class.active]="selectedColor()?.id === color.id"
+                      [style.background-color]="color.code"
+                      [style.background-image]="color.imageUrl ? 'url(' + imageUrl(color.imageUrl) + ')' : null"
+                      [title]="color.name"
+                      (click)="selectColor(color)"
+                    ></button>
+                  }
+                </div>
+                @if (selectedColor()) {
+                  <span class="selected-color-name">{{ selectedColor()!.name }}</span>
+                }
+              </div>
+            }
+
+            <div class="buy-box">
+              <div class="qty-selector">
+                <label>{{ 'product.quantity' | t }}</label>
+                <div class="qty-stepper">
+                  <button type="button" (click)="decreaseQty()" [disabled]="quantity <= 1" [attr.aria-label]="'common.decrease' | t">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+                  </button>
+                  <input type="number" min="1" [(ngModel)]="quantity" />
+                  <button type="button" (click)="increaseQty()" [attr.aria-label]="'common.increase' | t">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+              </div>
+              <button class="btn btn-primary" (click)="addToCart()" [disabled]="addingToCart()">
+                @if (addingToCart()) {
+                  <span class="spinner"></span>
+                }
+                {{ (addingToCart() ? 'product.adding' : 'product.addToCart') | t }}
+              </button>
+            </div>
+            @if (cartMessage()) {
+              <p class="alert alert-success">{{ cartMessage() }}</p>
+            }
+            @if (cartError()) {
+              <p class="alert alert-error">{{ cartError() }}</p>
+            }
+          } @else {
+            <div class="quote-box card">
+              <h3>{{ 'product.quoteTitle' | t }}</h3>
+              @if (quoteSent()) {
+                <p class="alert alert-success">
+                  {{ 'product.quoteSent' | t }}
+                </p>
+              } @else {
+                <form (ngSubmit)="submitQuote()">
+                  @if (quoteError()) {
+                    <p class="alert alert-error">{{ quoteError() }}</p>
+                  }
+                  <div class="form-field">
+                    <label>{{ 'common.fullName' | t }}</label>
+                    <input type="text" [(ngModel)]="quoteForm.name" name="name" required />
+                  </div>
+                  <div class="form-field">
+                    <label>{{ 'common.email' | t }}</label>
+                    <input type="email" [(ngModel)]="quoteForm.email" name="email" required />
+                  </div>
+                  <div class="form-field">
+                    <label>{{ 'common.phone' | t }}</label>
+                    <input type="tel" [(ngModel)]="quoteForm.phone" name="phone" />
+                  </div>
+                  <div class="form-field">
+                    <label>{{ 'common.message' | t }}</label>
+                    <textarea rows="4" [(ngModel)]="quoteForm.message" name="message" required></textarea>
+                  </div>
+                  <div class="form-field">
+                    <label>{{ 'product.attachments' | t }} <span class="optional">{{ 'common.optional' | t }}</span></label>
+                    <app-attachment-drop
+                      [compact]="true"
+                      (urlsChange)="quoteAttachments = $event"
+                      (busyChange)="quoteUploading.set($event)"
+                    />
+                  </div>
+                  <button class="btn btn-primary" type="submit" [disabled]="quoteSubmitting() || quoteUploading()">
+                    {{ (quoteSubmitting() ? 'common.sending' : quoteUploading() ? 'common.sendingFiles' : 'product.sendRequest') | t }}
+                  </button>
+                </form>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+}

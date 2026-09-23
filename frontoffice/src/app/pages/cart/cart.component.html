@@ -1,0 +1,67 @@
+<section class="section">
+  <div class="container">
+    <h1>{{ 'cart.title' | t }}</h1>
+
+    @if (loading()) {
+      <div class="cart-layout">
+        <div class="items">
+          @for (i of [1,2,3]; track i) {
+            <div class="skeleton" style="height: 108px; border-radius: var(--radius-md);"></div>
+          }
+        </div>
+        <div class="skeleton" style="height: 200px; border-radius: var(--radius-md);"></div>
+      </div>
+    } @else if (!cart() || cart()!.items.length === 0) {
+      <div class="empty-cart">
+        <div class="empty-state-icon" style="width: 64px; height: 64px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+        </div>
+        <p>{{ 'common.emptyCart' | t }}</p>
+        <a routerLink="/boutique" class="btn btn-primary">{{ 'common.discoverShop' | t }}</a>
+      </div>
+    } @else {
+      <div class="cart-layout">
+        <div class="items">
+          @for (item of cart()!.items; track item.id) {
+            <div class="cart-item card">
+              <img [src]="imageUrl(item.productImage)" [alt]="item.productName" />
+              <div class="item-info">
+                <a [routerLink]="['/boutique', item.productSlug]">{{ item.productName }}</a>
+                <span class="unit-price">{{ 'cart.perUnit' | t: { price: (item.unitPrice | number: '1.0-2') } }}</span>
+              </div>
+              <div class="qty-control">
+                <button (click)="updateQuantity(item.id, item.quantity - 1)" [disabled]="item.quantity <= 1" [attr.aria-label]="'common.decrease' | t">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+                </button>
+                <span>{{ item.quantity }}</span>
+                <button (click)="updateQuantity(item.id, item.quantity + 1)" [attr.aria-label]="'common.increase' | t">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+              </div>
+              <div class="subtotal">{{ item.subtotal | number: '1.0-2' }} {{ 'common.currency' | t }}</div>
+              <button class="remove-btn" (click)="removeItem(item.id)" [attr.aria-label]="'common.remove' | t">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+              </button>
+            </div>
+          }
+        </div>
+
+        <aside class="summary card">
+          <h3>{{ 'cart.summary' | t }}</h3>
+          <div class="summary-row muted">
+            <span>{{ 'cart.items' | t: { count: cart()!.items.length } }}</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>{{ 'common.total' | t }}</span>
+            <strong>{{ cart()!.total | number: '1.0-2' }} {{ 'common.currency' | t }}</strong>
+          </div>
+          <a routerLink="/commande" class="btn btn-primary full-width">{{ 'cart.checkout' | t }}</a>
+        </aside>
+      </div>
+    }
+  </div>
+</section>

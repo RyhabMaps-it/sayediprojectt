@@ -1,0 +1,103 @@
+@if (modal.isOpen()) {
+  <div class="backdrop" (click)="close()">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="login-title" (click)="$event.stopPropagation()">
+      <button class="close-btn" type="button" (click)="close()" [attr.aria-label]="'auth.close' | t">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="dialog-head">
+        <img src="/images/sayadi-logo.png" alt="Sayadi Group" class="logo" />
+        @if (modal.mode() === 'login') {
+          <h2 id="login-title">{{ 'auth.loginTitle' | t }}</h2>
+          <p class="subtitle">{{ 'auth.loginSubtitle' | t }}</p>
+        } @else {
+          <h2 id="login-title">{{ 'auth.registerTitle' | t }}</h2>
+          <p class="subtitle">{{ 'auth.registerSubtitle' | t }}</p>
+        }
+      </div>
+
+      @if (error()) {
+        <p class="alert alert-error">{{ error() }}</p>
+      }
+
+      <form (ngSubmit)="submit()">
+        @if (modal.mode() === 'register') {
+          <div class="name-row">
+            <div class="form-field">
+              <label for="reg-first">{{ 'auth.firstName' | t }}</label>
+              <input id="reg-first" type="text" [(ngModel)]="firstName" name="firstName" required autocomplete="given-name" />
+            </div>
+            <div class="form-field">
+              <label for="reg-last">{{ 'auth.lastName' | t }}</label>
+              <input id="reg-last" type="text" [(ngModel)]="lastName" name="lastName" required autocomplete="family-name" />
+            </div>
+          </div>
+        }
+        <div class="form-field">
+          <label for="login-email">{{ 'common.email' | t }}</label>
+          <input id="login-email" type="email" [(ngModel)]="email" name="email" required autocomplete="email" />
+        </div>
+        @if (modal.mode() === 'register') {
+          <div class="form-field">
+            <label for="reg-phone">{{ 'common.phone' | t }}</label>
+            <input id="reg-phone" type="tel" [(ngModel)]="phone" name="phone" autocomplete="tel" />
+          </div>
+        }
+        <div class="form-field">
+          <label for="login-password">{{ 'auth.password' | t }}</label>
+          <div class="password-wrap">
+            <input
+              id="login-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [(ngModel)]="password"
+              name="password"
+              required
+              [attr.minlength]="modal.mode() === 'register' ? 6 : null"
+              [attr.autocomplete]="modal.mode() === 'login' ? 'current-password' : 'new-password'"
+            />
+            <button
+              type="button"
+              class="toggle-pw"
+              (click)="showPassword.set(!showPassword())"
+              [attr.aria-label]="(showPassword() ? 'auth.hidePassword' : 'auth.showPassword') | t"
+            >
+              @if (showPassword()) {
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"></path>
+                  <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              } @else {
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              }
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-primary full-width" type="submit" [disabled]="loading()">
+          @if (loading()) {
+            <span class="spinner"></span>
+          }
+          @if (modal.mode() === 'login') {
+            {{ (loading() ? 'auth.loggingIn' : 'auth.login') | t }}
+          } @else {
+            {{ (loading() ? 'auth.creating' : 'auth.register') | t }}
+          }
+        </button>
+      </form>
+
+      <p class="switch-link">
+        @if (modal.mode() === 'login') {
+          {{ 'auth.noAccount' | t }} <button type="button" (click)="switchTo('register')">{{ 'auth.createAccount' | t }}</button>
+        } @else {
+          {{ 'auth.haveAccount' | t }} <button type="button" (click)="switchTo('login')">{{ 'auth.login' | t }}</button>
+        }
+      </p>
+    </div>
+  </div>
+}

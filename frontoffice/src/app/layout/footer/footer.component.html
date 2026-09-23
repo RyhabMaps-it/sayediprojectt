@@ -1,0 +1,42 @@
+<footer class="site-footer">
+  <div class="container grid">
+    <div class="col brand-col">
+      <img src="/images/sayadi-logo.png" alt="Sayadi Group" class="logo" />
+      <p>{{ 'footer.about' | t }}</p>
+    </div>
+
+    <div class="col">
+      <h4>{{ 'footer.navigation' | t }}</h4>
+      <a routerLink="/">{{ 'nav.home' | t }}</a>
+      <a routerLink="/boutique">{{ 'nav.shop' | t }}</a>
+      <a routerLink="/a-propos">{{ 'nav.about' | t }}</a>
+      <a routerLink="/contact">{{ 'nav.contact' | t }}</a>
+    </div>
+
+    <div class="col">
+      <h4>{{ 'footer.services' | t }}</h4>
+      <a routerLink="/devis">{{ 'footer.requestQuote' | t }}</a>
+      <a routerLink="/rendez-vous">{{ 'footer.bookAppointment' | t }}</a>
+      <a routerLink="/collaboration">{{ 'nav.architectSpace' | t }}</a>
+      <a routerLink="/compte">{{ 'footer.myOrders' | t }}</a>
+    </div>
+
+    <div class="col">
+      <h4>{{ 'footer.contact' | t }}</h4>
+      <p class="contact-line">{{ 'common.address' | t }}</p>
+      <p class="contact-line">
+        <a href="tel:+21625303339">25 303 339</a> / <a href="tel:+21670726641">70 726 641</a>
+      </p>
+      <p class="contact-line">
+        <a href="mailto:contact@sayadi.tn">contact&#64;sayadi.tn</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="container bottom-inner">
+      <span>{{ 'footer.rights' | t: { year: year } }}</span>
+      <span>{{ 'footer.since' | t }}</span>
+    </div>
+  </div>
+</footer>

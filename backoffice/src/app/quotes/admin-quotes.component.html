@@ -1,0 +1,78 @@
+<div class="page-head">
+  <div>
+    <h1>Devis</h1>
+    <p>Demandes de devis envoyées depuis le site, avec les photos et plans joints par les clients.</p>
+  </div>
+</div>
+
+@if (loading()) {
+  <div class="admin-table-wrap">
+    <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+      @for (i of [1,2,3]; track i) {
+        <div class="skeleton" style="height: 88px;"></div>
+      }
+    </div>
+  </div>
+} @else if (quotes().length === 0) {
+  <div class="admin-table-wrap">
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+      </div>
+      <p>Aucune demande de devis pour le moment.</p>
+    </div>
+  </div>
+} @else {
+  <div class="quote-list">
+    @for (quote of quotes(); track quote.id) {
+      <article class="quote-card">
+        <header class="quote-head">
+          <div class="quote-who">
+            <strong>{{ quote.name }}</strong>
+            <div class="quote-contact">
+              <a [href]="'mailto:' + quote.email">{{ quote.email }}</a>
+              @if (quote.phone) {
+                <span>·</span>
+                <a [href]="'tel:' + quote.phone">{{ quote.phone }}</a>
+              }
+            </div>
+          </div>
+          <div class="quote-side">
+            <time>{{ quote.createdAt | date: 'dd/MM/yyyy HH:mm' }}</time>
+            <div class="row-actions">
+              @if (confirmDeleteId() === quote.id) {
+                <button class="admin-btn-icon danger" (click)="confirmDelete(quote.id)" [disabled]="processingId() === quote.id" title="Confirmer la suppression">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+                <button class="admin-btn-icon" (click)="cancelDelete()" title="Annuler">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+              } @else {
+                <button class="admin-btn-icon danger" (click)="askDelete(quote.id)" title="Supprimer">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                </button>
+              }
+            </div>
+          </div>
+        </header>
+
+        @if (quote.subject || quote.productName) {
+          <div class="quote-tags">
+            @if (quote.subject) {
+              <span class="quote-subject">{{ quote.subject }}</span>
+            }
+            @if (quote.productName) {
+              <span class="admin-badge">{{ quote.productName }}</span>
+            }
+          </div>
+        }
+
+        <p class="quote-message">{{ quote.message }}</p>
+
+        @if (quote.attachments.length > 0) {
+          <app-attachment-thumbs class="quote-attachments" [files]="quote.attachments" />
+        }
+      </article>
+    }
+  </div>
+}

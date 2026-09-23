@@ -1,0 +1,64 @@
+<section class="admin-login-page">
+  <div class="login-visual">
+    <div class="login-visual-pattern"></div>
+    <div class="login-visual-content">
+      <img src="/images/sayadi-logo.png" alt="Sayadi Group" class="login-visual-logo" />
+      <h1>Sayadi Group</h1>
+      <p class="eyebrow">Back-office &middot; Depuis 1959</p>
+      <p class="login-visual-text">
+        Pilotez le catalogue, les coloris, les rendez-vous et les demandes de
+        collaboration de Sayadi Group depuis un seul espace.
+      </p>
+    </div>
+  </div>
+
+  <div class="login-form-side">
+    <div class="login-card">
+      <img src="/images/sayadi-logo.png" alt="Sayadi Group" class="login-card-logo" />
+      <h2>Connexion</h2>
+      <p class="subtitle">Accédez à votre espace d'administration.</p>
+
+      @if (error()) {
+        <p class="alert alert-error">{{ error() }}</p>
+      }
+
+      <form (ngSubmit)="submit()">
+        <div class="admin-field">
+          <label class="admin-label">Email</label>
+          <input
+            class="admin-input"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="vous@sayadi.tn"
+          />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">Mot de passe</label>
+          <input
+            class="admin-input"
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            autocomplete="current-password"
+            placeholder="••••••••"
+          />
+        </div>
+        <button class="btn btn-primary full-width" type="submit" [disabled]="loading()">
+          @if (loading()) {
+            <span class="spinner"></span>
+          }
+          {{ loading() ? 'Connexion…' : 'Se connecter' }}
+        </button>
+      </form>
+
+      <a href="/" class="back-to-site">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        Retour au site
+      </a>
+    </div>
+  </div>
+</section>

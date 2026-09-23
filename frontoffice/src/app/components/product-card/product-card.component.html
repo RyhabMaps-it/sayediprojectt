@@ -1,0 +1,16 @@
+<a class="product-card" [routerLink]="['/boutique', product.slug]">
+  <div class="image-wrap">
+    <img [src]="imageUrl" [alt]="product.name" loading="lazy" />
+    <span class="category-tag">{{ product.categoryName }}</span>
+  </div>
+  <div class="content">
+    <h3>{{ product.name }}</h3>
+    <p class="dims" *ngIf="product.heightCm">
+      {{ product.heightCm }} x {{ product.widthCm }} x {{ product.depthCm }} cm
+    </p>
+    <div class="footer-row">
+      <app-price [price]="product.price" [priceOnRequest]="product.priceOnRequest"></app-price>
+      <span class="cta">{{ 'productCard.view' | t }}</span>
+    </div>
+  </div>
+</a>

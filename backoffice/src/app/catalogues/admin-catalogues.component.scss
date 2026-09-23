@@ -1,0 +1,39 @@
+.cover-thumb {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--admin-border);
+}
+
+.cover-thumb--icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+.file-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--admin-accent);
+}
+
+.file-link:hover {
+  text-decoration: underline;
+}
+
+.hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: var(--admin-ink-soft);
+}
+
+.hint-error {
+  color: #c0392b;
+}

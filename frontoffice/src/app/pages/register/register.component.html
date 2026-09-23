@@ -1,0 +1,61 @@
+<section class="auth-page">
+  <div class="auth-visual">
+    <img [src]="visualImage" alt="" />
+    <div class="auth-visual-overlay"></div>
+    <div class="auth-visual-content">
+      <span class="eyebrow">{{ 'common.sinceEyebrow' | t }}</span>
+      <h1>{{ 'auth.registerVisualTitle' | t }}</h1>
+      <p>{{ 'auth.registerVisualText' | t }}</p>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <a routerLink="/" class="auth-logo">
+        <img src="/images/sayadi-logo.png" alt="Sayadi Group" />
+      </a>
+
+      <h2>{{ 'auth.registerTitle' | t }}</h2>
+      <p class="subtitle">{{ 'auth.registerSubtitle' | t }}</p>
+
+      @if (error()) {
+        <p class="alert alert-error">{{ error() }}</p>
+      }
+
+      <form (ngSubmit)="submit()">
+        <div class="name-row">
+          <div class="form-field">
+            <label>{{ 'auth.firstName' | t }}</label>
+            <input type="text" [(ngModel)]="firstName" name="firstName" required autocomplete="given-name" />
+          </div>
+          <div class="form-field">
+            <label>{{ 'auth.lastName' | t }}</label>
+            <input type="text" [(ngModel)]="lastName" name="lastName" required autocomplete="family-name" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label>{{ 'common.email' | t }}</label>
+          <input type="email" [(ngModel)]="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="form-field">
+          <label>{{ 'common.phone' | t }}</label>
+          <input type="tel" [(ngModel)]="phone" name="phone" autocomplete="tel" />
+        </div>
+        <div class="form-field">
+          <label>{{ 'auth.password' | t }}</label>
+          <input type="password" [(ngModel)]="password" name="password" required minlength="6" autocomplete="new-password" />
+        </div>
+        <button class="btn btn-primary full-width" type="submit" [disabled]="loading()">
+          @if (loading()) {
+            <span class="spinner"></span>
+          }
+          {{ (loading() ? 'auth.creating' : 'auth.register') | t }}
+        </button>
+      </form>
+
+      <p class="switch-link">
+        {{ 'auth.haveAccount' | t }} <a routerLink="/connexion">{{ 'auth.login' | t }}</a>
+      </p>
+    </div>
+  </div>
+</section>

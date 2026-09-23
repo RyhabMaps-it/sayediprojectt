@@ -1,0 +1,134 @@
+@if (loading()) {
+  <div class="modal-form" style="display: flex; flex-direction: column; gap: 14px;">
+    @for (i of [1,2,3,4]; track i) {
+      <div class="skeleton" style="height: 40px;"></div>
+    }
+  </div>
+} @else {
+  <form [formGroup]="form" (ngSubmit)="submit()" class="product-form modal-form">
+    @if (errorMessage()) {
+      <div class="alert alert-error">{{ errorMessage() }}</div>
+    }
+
+    <div class="form-section">
+      <h2>Informations générales</h2>
+      <div class="form-row">
+        <div class="admin-field">
+          <label class="admin-label">Nom du produit *</label>
+          <input class="admin-input" type="text" formControlName="name" />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">Catégorie *</label>
+          <select class="admin-select" formControlName="categoryId">
+            <option [ngValue]="null" disabled>Choisir une catégorie</option>
+            @for (cat of categories(); track cat.id) {
+              <option [ngValue]="cat.id">{{ cat.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-label">Description</label>
+        <textarea class="admin-textarea" rows="4" formControlName="description"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="admin-field">
+          <label class="admin-label">SKU / Référence</label>
+          <input class="admin-input" type="text" formControlName="sku" />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">Stock *</label>
+          <input class="admin-input" type="number" min="0" formControlName="stockQuantity" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2>Dimensions & matériau</h2>
+      <div class="form-row form-row-3">
+        <div class="admin-field">
+          <label class="admin-label">Hauteur (cm)</label>
+          <input class="admin-input" type="text" formControlName="heightCm" />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">Largeur (cm)</label>
+          <input class="admin-input" type="text" formControlName="widthCm" />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">Profondeur (cm)</label>
+          <input class="admin-input" type="text" formControlName="depthCm" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="admin-field">
+          <label class="admin-label">Matériau</label>
+          <input class="admin-input" type="text" formControlName="material" placeholder="GRC, béton, bois…" />
+        </div>
+        <div class="admin-field">
+          <label class="admin-label">Unités</label>
+          <input class="admin-input" type="text" formControlName="units" placeholder="pièce, m²…" />
+        </div>
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Options de coloris (texte libre)</label>
+        <input class="admin-input" type="text" formControlName="colorOptions" />
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2>Coloris disponibles</h2>
+      @if (colors().length === 0) {
+        <p class="empty-state">Aucun coloris enregistré. Ajoutez-en depuis la page Couleurs.</p>
+      } @else {
+        <div class="color-grid">
+          @for (color of colors(); track color.id; let i = $index) {
+            <label class="color-chip">
+              <input type="checkbox" [formControl]="colorIdsArray.at(i)" />
+              @if (color.imageUrl) {
+                <img class="swatch-img" [src]="resolveImageUrl(color.imageUrl)" alt="" />
+              } @else {
+                <span class="swatch" [style.background]="color.code"></span>
+              }
+              {{ color.name }}
+            </label>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="form-section">
+      <h2>Tarification</h2>
+      <label class="admin-checkbox">
+        <input type="checkbox" formControlName="priceOnRequest" />
+        Prix sur devis (masquer le prix public)
+      </label>
+      @if (!form.controls.priceOnRequest.value) {
+        <div class="admin-field" style="max-width: 240px; margin-top: 12px;">
+          <label class="admin-label">Prix (TND)</label>
+          <input class="admin-input" type="number" min="0" step="0.01" formControlName="price" />
+        </div>
+      }
+      <label class="admin-checkbox" style="margin-top: 12px;">
+        <input type="checkbox" formControlName="hasTechnicalSheet" />
+        Fiche technique PDF disponible
+      </label>
+    </div>
+
+    <div class="form-section">
+      <h2>Images</h2>
+      <app-image-gallery formControlName="images" (busyChange)="onUploadBusy($event)" />
+    </div>
+
+    <div class="modal-form-actions modal-form-actions--sticky">
+      <button type="button" class="btn btn-ghost" (click)="cancelled.emit()">Annuler</button>
+      <button type="submit" class="btn btn-primary" [disabled]="saving() || uploadsInProgress() > 0">
+        @if (saving()) {
+          <span class="spinner"></span>
+        }
+        {{ isEdit() ? 'Enregistrer les modifications' : 'Créer le produit' }}
+      </button>
+    </div>
+  </form>
+}

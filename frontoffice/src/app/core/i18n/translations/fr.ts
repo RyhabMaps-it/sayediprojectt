@@ -1,0 +1,307 @@
+export const fr = {
+  meta: {
+    title: 'Sayadi Group - Claustra en GRC depuis 1959'
+  },
+  common: {
+    brandTagline: 'Group · Since 1959',
+    sinceEyebrow: 'Sayadi Group · Depuis 1959',
+    currency: 'TND',
+    fullName: 'Nom complet',
+    email: 'Email',
+    phone: 'Téléphone',
+    subject: 'Sujet',
+    message: 'Message',
+    optional: '(optionnel)',
+    sending: 'Envoi…',
+    sendingFiles: 'Envoi des fichiers…',
+    genericError: 'Une erreur est survenue, veuillez réessayer.',
+    backToShop: 'Retour à la boutique',
+    discoverShop: 'Découvrir la boutique',
+    total: 'Total',
+    decrease: 'Diminuer',
+    increase: 'Augmenter',
+    remove: 'Retirer',
+    clear: 'Effacer',
+    address: 'Avenue Mongi Slim, Aouina, Tunis',
+    emptyCart: 'Votre panier est vide.',
+    onRequest: 'Sur devis'
+  },
+  nav: {
+    home: 'Accueil',
+    shop: 'Boutique',
+    quote: 'Devis',
+    appointment: 'Rendez-vous',
+    about: 'À propos',
+    contact: 'Contact',
+    account: 'Mon compte',
+    architectSpace: 'Espace architecte',
+    login: 'Connexion',
+    logout: 'Déconnexion',
+    cart: 'Panier',
+    menu: 'Menu',
+    language: 'Langue',
+    profile: 'Mon profil'
+  },
+  footer: {
+    about:
+      "Depuis 1959, Sayadi Group conçoit et fabrique des panneaux décoratifs claustra en GRC, alliant artisanat tunisien et motifs géométriques inspirés de l'art andalou.",
+    navigation: 'Navigation',
+    services: 'Services',
+    contact: 'Contact',
+    requestQuote: 'Demander un devis',
+    bookAppointment: 'Prendre rendez-vous',
+    myOrders: 'Mes commandes',
+    rights: '© {{year}} Sayadi Group. Tous droits réservés.',
+    since: 'Fabricant tunisien depuis 1959'
+  },
+  productCard: {
+    view: 'Voir le produit →'
+  },
+  home: {
+    heroTitle: "L'art du claustra, sculpté dans la pierre",
+    heroText:
+      "Fabricant tunisien de panneaux décoratifs claustra en GRC, aux motifs géométriques inspirés de l'héritage andalou. Façades, clôtures, brise-vues — sur mesure, pour particuliers et professionnels.",
+    discover: 'Découvrir la collection',
+    requestQuote: 'Demander un devis',
+    trust: {
+      craftTitle: '1959',
+      craft: 'Savoir-faire artisanal tunisien',
+      grcTitle: 'GRC',
+      grc: 'Béton renforcé de fibre de verre, haute durabilité',
+      customTitle: 'Sur mesure',
+      custom: 'Dimensions et coloris au choix',
+      cityTitle: 'Tunis',
+      city: 'Avenue Mongi Slim, Aouina'
+    },
+    knowhowEyebrow: 'Notre savoir-faire',
+    knowhowTitle: 'Panneaux Claustra en GRC',
+    knowhowText:
+      'Chaque panneau est une pièce décorative à part entière : motifs géométriques ajourés, finitions sur mesure, pensés pour sublimer vos façades, clôtures et séparations intérieures.',
+    seeAll: 'Voir toute la boutique',
+    cataloguesEyebrow: 'Documentation',
+    cataloguesTitle: 'Nos catalogues',
+    cataloguesText:
+      "Consultez ou téléchargez nos catalogues produits pour découvrir l'ensemble de notre collection.",
+    open: 'Consulter',
+    download: 'Télécharger',
+    pdfBadge: 'Catalogue PDF',
+    viewPdf: 'Consulter le PDF',
+    ctaTitle: 'Un projet architectural ou décoratif ?',
+    ctaText: 'Nos équipes étudient avec vous les dimensions, motifs et finitions adaptés à votre projet.',
+    ctaButton: 'Nous contacter'
+  },
+  about: {
+    eyebrow: 'Notre histoire',
+    title: 'Sayadi Group, depuis 1959',
+    intro:
+      "Trois générations de savoir-faire artisanal tunisien au service de la pierre décorative. De père en fils, l'atelier Sayadi perpétue l'art du claustra, entre tradition andalouse et exigence contemporaine.",
+    imgFence: 'Claustra Sayadi installé en clôture',
+    imgDetail: 'Détail motif claustra Sayadi',
+    heritageTitle: 'Un héritage familial',
+    heritage1:
+      "Fondée en 1959, Sayadi Group est aujourd'hui reconnue pour la fabrication de panneaux décoratifs claustra en GRC (béton renforcé de fibre de verre). Nos motifs, inspirés de la géométrie andalouse et de l'architecture méditerranéenne, habillent façades, clôtures et intérieurs avec élégance et durabilité.",
+    heritage2:
+      "Chaque panneau est pensé sur mesure : dimensions, épaisseur et coloris s'adaptent à votre projet, qu'il soit résidentiel ou architectural.",
+    statYears: "Ans d'expérience",
+    statGenerations: 'Générations',
+    statCustom: 'Sur mesure',
+    commitmentTitle: 'Notre engagement',
+    value1Title: 'Savoir-faire artisanal',
+    value1: 'Un métier transmis depuis 1959, entre précision technique et sens du détail.',
+    value2Title: 'Matériaux durables',
+    value2: "Le GRC allie légèreté, résistance aux intempéries et longévité pour l'extérieur comme l'intérieur.",
+    value3Title: 'Sur mesure',
+    value3: 'Dimensions, motifs et finitions adaptés à chaque projet, résidentiel ou professionnel.',
+    ctaTitle: 'Envie de visiter notre atelier ?',
+    ctaText: 'Avenue Mongi Slim, Aouina, Tunis — sur rendez-vous.',
+    ctaButton: 'Prendre rendez-vous'
+  },
+  shop: {
+    eyebrow: 'Catalogue',
+    title: 'Notre boutique',
+    intro: "Découvrez l'ensemble de nos panneaux claustra en GRC, sur devis ou disponibles à la commande.",
+    search: 'Rechercher',
+    searchPlaceholder: 'Rechercher un produit...',
+    categories: 'Catégories',
+    allCategories: 'Toutes les catégories',
+    colors: 'Coloris',
+    empty: 'Aucun produit ne correspond à votre recherche.'
+  },
+  product: {
+    notFound: 'Produit introuvable.',
+    backToShop: '← Retour à la boutique',
+    material: 'Matériau',
+    dimensions: 'Dimensions',
+    dimensionsValue: '{{h}} (H) x {{w}} (L) x {{d}} (Ép.) cm',
+    colors: 'Coloris',
+    reference: 'Référence',
+    downloadSheet: 'Télécharger la fiche technique (espace pro)',
+    downloading: 'Téléchargement…',
+    sheetError: 'Impossible de télécharger la fiche technique.',
+    quantity: 'Quantité',
+    addToCart: 'Ajouter au panier',
+    adding: 'Ajout…',
+    added: 'Produit ajouté au panier.',
+    selectColor: 'Veuillez sélectionner un coloris.',
+    addError: "Impossible d'ajouter ce produit au panier.",
+    quoteTitle: 'Demander un devis',
+    quoteSent: 'Merci, votre demande a bien été envoyée. Notre équipe vous recontactera rapidement.',
+    quoteDefaultMessage: 'Bonjour, je souhaite un devis pour le produit "{{name}}".',
+    quoteSubject: 'Devis - {{name}}',
+    attachments: 'Photos ou plans',
+    sendRequest: 'Envoyer la demande'
+  },
+  cart: {
+    title: 'Mon panier',
+    perUnit: '{{price}} TND / unité',
+    summary: 'Résumé',
+    items: '{{count}} article(s)',
+    checkout: 'Passer la commande'
+  },
+  checkout: {
+    title: 'Finaliser la commande',
+    thanks: 'Merci pour votre commande !',
+    placed: 'Votre commande {{number}} a bien été enregistrée. Notre équipe vous contactera pour la suite.',
+    viewOrders: 'Voir mes commandes',
+    shippingAddress: 'Adresse de livraison',
+    address: 'Adresse',
+    city: 'Ville',
+    postalCode: 'Code postal',
+    country: 'Pays',
+    defaultCountry: 'Tunisie',
+    confirm: 'Confirmer la commande',
+    validating: 'Validation…',
+    summary: 'Résumé de la commande',
+    qty: 'Qté {{qty}}',
+    error: 'Impossible de finaliser la commande.'
+  },
+  account: {
+    title: 'Mon compte',
+    becomePartner: 'Devenir partenaire architecte',
+    orders: 'Mes commandes',
+    noOrders: "Vous n'avez pas encore passé de commande.",
+    status: {
+      PENDING: 'En attente',
+      CONFIRMED: 'Confirmée',
+      PROCESSING: 'En préparation',
+      SHIPPED: 'Expédiée',
+      DELIVERED: 'Livrée',
+      CANCELLED: 'Annulée'
+    }
+  },
+  auth: {
+    loginVisualTitle: 'Bienvenue dans votre espace',
+    loginVisualText: 'Suivez vos commandes, vos rendez-vous et vos projets de claustra en toute simplicité.',
+    loginTitle: 'Connexion',
+    loginSubtitle: 'Accédez à votre compte pour suivre vos commandes.',
+    password: 'Mot de passe',
+    loggingIn: 'Connexion…',
+    login: 'Se connecter',
+    noAccount: 'Pas encore de compte ?',
+    createAccount: 'Créer un compte',
+    loginError: 'Email ou mot de passe incorrect.',
+    registerVisualTitle: 'Rejoignez Sayadi Group',
+    registerVisualText:
+      "Créez votre compte pour commander en ligne, suivre vos projets et accéder à l'espace collaboration.",
+    registerTitle: 'Créer un compte',
+    registerSubtitle: 'Rejoignez Sayadi Group pour commander en ligne.',
+    firstName: 'Prénom',
+    lastName: 'Nom',
+    creating: 'Création…',
+    register: 'Créer mon compte',
+    close: 'Fermer',
+    showPassword: 'Afficher le mot de passe',
+    hidePassword: 'Masquer le mot de passe',
+    haveAccount: 'Déjà un compte ?',
+    registerError: 'Impossible de créer le compte.'
+  },
+  contact: {
+    eyebrow: 'Contact',
+    title: 'Parlons de votre projet',
+    intro: 'Une question, un projet sur mesure ou une demande de devis ? Notre équipe vous répond rapidement.',
+    address: 'Adresse',
+    sentTitle: 'Message envoyé',
+    sentText: 'Merci pour votre message, nous vous répondrons dans les plus brefs délais.',
+    send: 'Envoyer le message'
+  },
+  quote: {
+    eyebrow: 'Devis gratuit',
+    title: 'Demander un devis',
+    intro:
+      'Nos panneaux GRC, éléments de marbre, cheminées et revêtements sont réalisés sur mesure. Décrivez-nous votre projet, nous revenons vers vous avec une proposition adaptée.',
+    sentTitle: 'Demande envoyée',
+    sentText: 'Merci, votre demande de devis a bien été envoyée. Notre équipe vous recontactera rapidement.',
+    subjectPlaceholder: 'Ex: Claustra pour clôture 12m',
+    details: 'Détails du projet',
+    attachments: 'Photos ou plans',
+    send: 'Envoyer ma demande de devis'
+  },
+  appointment: {
+    eyebrow: 'Showroom',
+    title: 'Prendre rendez-vous',
+    intro:
+      'Visitez notre atelier à Aouina, Tunis, pour découvrir nos panneaux claustra en GRC et échanger avec notre équipe sur votre projet. Ouvert du lundi au samedi, 9h-17h.',
+    sentTitle: 'Rendez-vous demandé',
+    sentText: 'Votre demande de rendez-vous a bien été enregistrée. Nous vous confirmerons le créneau par email.',
+    date: 'Date souhaitée',
+    time: 'Créneau horaire',
+    chooseTime: 'Choisir un horaire',
+    messageOptional: 'Message (optionnel)',
+    attachments: 'Photos ou plans de votre projet',
+    send: 'Confirmer la demande de rendez-vous'
+  },
+  collaboration: {
+    eyebrow: 'Espace professionnel',
+    title: 'Devenir partenaire architecte',
+    intro:
+      "Architectes, décorateurs et professionnels du bâtiment : demandez votre statut partenaire pour bénéficier d'un tarif préférentiel et de l'accès aux fiches techniques de nos produits.",
+    newRequest: 'Nouvelle demande',
+    sentTitle: 'Demande envoyée',
+    sentText: "Votre demande a bien été envoyée. Notre équipe l'étudiera et reviendra vers vous rapidement.",
+    activity: 'Présentez votre activité',
+    activityPlaceholder: "Cabinet d'architecture, décorateur d'intérieur, entreprise de construction…",
+    attachments: 'Portfolio, références ou plaquette',
+    send: 'Envoyer ma demande',
+    history: 'Mes demandes',
+    status: {
+      PENDING: 'En attente',
+      ACCEPTED: 'Acceptée — vous êtes maintenant partenaire architecte',
+      REJECTED: 'Refusée'
+    }
+  },
+  attachments: {
+    add: 'Ajoutez des photos ou un plan',
+    dragHint: '— cliquez ou glissez-déposez',
+    hint: 'JPG, PNG, WEBP ou PDF · 10 Mo max · {{max}} fichiers max',
+    uploading: 'Envoi en cours…',
+    added: 'Ajouté',
+    remove: 'Retirer',
+    tooMany: '{{max}} fichiers maximum.',
+    badType: '{{name}} : format non accepté (JPG, PNG, WEBP ou PDF).',
+    tooBig: '{{name}} : fichier trop volumineux (10 Mo maximum).',
+    failed: "{{name}} : échec de l'envoi, réessayez."
+  },
+  viewer: {
+    back: 'Retour',
+    page: 'Page {{current}} / {{total}}',
+    pages: 'Pages {{from}}–{{to}} / {{total}}',
+    fullscreen: 'Plein écran',
+    exitFullscreen: 'Quitter le plein écran',
+    loading: 'Ouverture du catalogue…',
+    notFound: "Ce catalogue n'existe pas ou a été retiré.",
+    error: "Impossible d'afficher ce catalogue ici.",
+    openPdf: 'Ouvrir le PDF',
+    backHome: "Retour à l'accueil",
+    prev: 'Page précédente',
+    next: 'Page suivante',
+    hint: 'Cliquez ou faites glisser pour tourner les pages · double-clic pour zoomer',
+    goTo: 'Aller à la page',
+    zoomIn: 'Zoomer',
+    zoomOut: 'Dézoomer',
+    resetZoom: 'Taille réelle (100 %)'
+  },
+  notFound: {
+    text: "Cette page n'existe pas.",
+    back: "Retour à l'accueil"
+  }
+};

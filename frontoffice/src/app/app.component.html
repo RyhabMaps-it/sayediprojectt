@@ -1,0 +1,13 @@
+@if (!isChromeless()) {
+  <app-header></app-header>
+}
+
+<main [class.no-chrome]="isChromeless()">
+  <router-outlet></router-outlet>
+</main>
+
+@if (!isChromeless()) {
+  <app-footer></app-footer>
+}
+
+<app-login-modal></app-login-modal>

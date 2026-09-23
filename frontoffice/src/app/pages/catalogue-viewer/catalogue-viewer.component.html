@@ -1,0 +1,160 @@
+<div class="viewer">
+  <header class="topbar">
+    <button type="button" class="tool back" (click)="close()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      <span class="tool-label">{{ 'viewer.back' | t }}</span>
+    </button>
+
+    <div class="title">
+      <span class="kicker">{{ 'home.pdfBadge' | t }}</span>
+      <strong>{{ catalogue()?.title }}</strong>
+    </div>
+
+    <div class="tools">
+      @if (numPages()) {
+        <span class="page-count">
+          @if (visiblePages().length === 2) {
+            {{ 'viewer.pages' | t: { from: visiblePages()[0], to: visiblePages()[1], total: numPages() } }}
+          } @else {
+            {{ 'viewer.page' | t: { current: visiblePages()[0], total: numPages() } }}
+          }
+        </span>
+      }
+      @if (!loading() && !error()) {
+        <div class="zoom-group">
+          <button type="button" class="zoom-btn" (click)="zoomOut()" [disabled]="zoom() <= 1"
+            [attr.aria-label]="'viewer.zoomOut' | t" [title]="'viewer.zoomOut' | t">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="zoom-value" (click)="resetZoom()" [title]="'viewer.resetZoom' | t">{{ zoomPercent() }}%</button>
+          <button type="button" class="zoom-btn" (click)="zoomIn()" [disabled]="zoom() >= maxZoom"
+            [attr.aria-label]="'viewer.zoomIn' | t" [title]="'viewer.zoomIn' | t">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+      }
+      <button type="button" class="tool icon-only" (click)="toggleFullscreen()"
+        [attr.aria-label]="(isFullscreen() ? 'viewer.exitFullscreen' : 'viewer.fullscreen') | t"
+        [title]="(isFullscreen() ? 'viewer.exitFullscreen' : 'viewer.fullscreen') | t">
+        @if (isFullscreen()) {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+        } @else {
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+        }
+      </button>
+      @if (catalogue()) {
+        <a class="tool download" [href]="fileUrl()" [attr.download]="catalogue()!.title + '.pdf'" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+          <span class="tool-label">{{ 'home.download' | t }}</span>
+        </a>
+      }
+    </div>
+  </header>
+
+  <main
+    class="stage"
+    #stage
+    [class.is-zoomed]="zoom() > 1"
+    [class.is-dragging]="dragging()"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp($event)"
+    (pointercancel)="onPointerUp($event)"
+    (wheel)="onWheel($event)"
+    (dblclick)="onStageDblClick($event)"
+  >
+    @if (loading()) {
+      <div class="state">
+        <div class="loader-book" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <p>{{ 'viewer.loading' | t }}</p>
+        <div class="progress"><span [style.width.%]="progress()"></span></div>
+        <small>{{ progress() }}%</small>
+      </div>
+    } @else if (error()) {
+      <div class="state">
+        <div class="state-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9.5 12.5l5 5M14.5 12.5l-5 5"/></svg>
+        </div>
+        <p>{{ (error() === 'notFound' ? 'viewer.notFound' : 'viewer.error') | t }}</p>
+        <div class="state-actions">
+          @if (catalogue()) {
+            <a class="btn btn-gold" [href]="fileUrl()" target="_blank" rel="noopener">{{ 'viewer.openPdf' | t }}</a>
+          }
+          <a routerLink="/" class="btn btn-outline btn-light">{{ 'viewer.backHome' | t }}</a>
+        </div>
+      </div>
+    } @else {
+      <button type="button" class="nav nav-prev" (click)="prev()" [disabled]="!canPrev()" [attr.aria-label]="'viewer.prev' | t">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+
+      <div class="zoom-layer" [style.transform]="zoomTransform()">
+      <div
+        class="book"
+        dir="ltr"
+        [class.double]="doublePage()"
+        [class.cover-only]="doublePage() && !flip() && current()[0] === null"
+        [class.back-only]="doublePage() && !flip() && current()[1] === null"
+        [style.--pw.px]="pageSize().width"
+        [style.--ph.px]="pageSize().height"
+        (click)="onBookClick($event)"
+      >
+        @if (doublePage()) {
+          <div class="page page-left" [class.blank]="!underlay()[0]">
+            @if (underlay()[0]; as p) {
+              @if (image(p); as src) { <img [src]="src" alt="" draggable="false" /> } @else { <span class="page-skeleton"></span> }
+            }
+          </div>
+          <div class="page page-right" [class.blank]="!underlay()[1]">
+            @if (underlay()[1]; as p) {
+              @if (image(p); as src) { <img [src]="src" alt="" draggable="false" /> } @else { <span class="page-skeleton"></span> }
+            }
+          </div>
+          <span class="gutter" aria-hidden="true"></span>
+
+          @if (flip(); as f) {
+            <div class="leaf" [class.leaf-next]="f.dir === 'next'" [class.leaf-prev]="f.dir === 'prev'">
+              <div class="leaf-face leaf-front">
+                @if (image(f.front); as src) { <img [src]="src" alt="" draggable="false" /> } @else { <span class="page-skeleton"></span> }
+              </div>
+              <div class="leaf-face leaf-back">
+                @if (image(f.back); as src) { <img [src]="src" alt="" draggable="false" /> } @else { <span class="page-skeleton"></span> }
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="page page-single" [class.turn-next]="singleTurn() === 'next'" [class.turn-prev]="singleTurn() === 'prev'">
+            @if (image(current()[0]); as src) { <img [src]="src" alt="" draggable="false" /> } @else { <span class="page-skeleton"></span> }
+          </div>
+        }
+      </div>
+      </div>
+
+      <button type="button" class="nav nav-next" (click)="next()" [disabled]="!canNext()" [attr.aria-label]="'viewer.next' | t">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+
+      @if (showHint()) {
+        <div class="hint">{{ 'viewer.hint' | t }}</div>
+      }
+    }
+  </main>
+
+  @if (numPages() > 1 && !error()) {
+    <footer class="bottombar">
+      <span class="edge">1</span>
+      <input
+        type="range"
+        dir="ltr"
+        min="1"
+        [max]="numPages()"
+        [value]="visiblePages()[0] || 1"
+        (change)="onSlider($event)"
+        [attr.aria-label]="'viewer.goTo' | t"
+      />
+      <span class="edge">{{ numPages() }}</span>
+    </footer>
+  }
+</div>

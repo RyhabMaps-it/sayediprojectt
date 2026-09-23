@@ -1,0 +1,17 @@
+.narrow {
+  max-width: 640px;
+}
+
+.form-card {
+  padding: 32px;
+}
+
+@media (max-width: 560px) {
+  .form-card {
+    padding: 20px 16px;
+  }
+
+  .form-card .btn[type='submit'] {
+    width: 100%;
+  }
+}

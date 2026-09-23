@@ -1,0 +1,156 @@
+:host {
+  display: block;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 12px;
+  padding: 12px;
+  border: 1.5px dashed transparent;
+  border-radius: 14px;
+  margin: -12px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &.is-drag {
+    border-color: var(--admin-accent);
+    background: var(--admin-accent-soft);
+  }
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 1;
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &:hover .tile-actions,
+  &:focus-within .tile-actions {
+    opacity: 1;
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--admin-accent);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tile-actions {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 8px;
+  background: linear-gradient(to top, rgba(16, 18, 27, 0.6), transparent);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  @media (hover: none) {
+    opacity: 1;
+  }
+}
+
+.tile-btn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--admin-ink);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #fff;
+    color: var(--admin-accent);
+  }
+
+  &.danger:hover {
+    color: #c0392b;
+  }
+}
+
+.is-pending img {
+  filter: saturate(0.6);
+}
+
+.tile-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(16, 18, 27, 0.45);
+}
+
+.spinner-light {
+  border-color: rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+}
+
+.add-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1.5px dashed var(--admin-border);
+  background: var(--admin-bg);
+  color: var(--admin-ink-soft);
+  font: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  span {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  small {
+    font-size: 0.7rem;
+  }
+
+  &:hover {
+    border-color: var(--admin-accent);
+    background: var(--admin-accent-soft);
+    color: var(--admin-accent);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.gallery-hint {
+  margin: 12px 0 0;
+  font-size: 0.76rem;
+  color: var(--admin-ink-soft);
+}
+
+.gallery-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #c0392b;
+}

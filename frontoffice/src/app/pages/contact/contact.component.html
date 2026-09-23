@@ -1,0 +1,81 @@
+<section class="contact-hero">
+  <div class="container">
+    <span class="eyebrow">{{ 'contact.eyebrow' | t }}</span>
+    <h1>{{ 'contact.title' | t }}</h1>
+    <p>{{ 'contact.intro' | t }}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container contact-layout">
+    <div class="contact-info">
+      <div class="info-item card">
+        <div class="info-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h4>{{ 'contact.address' | t }}</h4>
+        <p>{{ 'common.address' | t }}</p>
+      </div>
+      <div class="info-item card">
+        <div class="info-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        </div>
+        <h4>{{ 'common.phone' | t }}</h4>
+        <p><a href="tel:+21625303339">25 303 339</a></p>
+        <p><a href="tel:+21670726641">70 726 641</a></p>
+      </div>
+      <div class="info-item card">
+        <div class="info-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        </div>
+        <h4>{{ 'common.email' | t }}</h4>
+        <p><a href="mailto:contact@sayadi.tn">contact&#64;sayadi.tn</a></p>
+      </div>
+    </div>
+
+    <div class="contact-form card">
+      @if (sent()) {
+        <div class="success-panel">
+          <div class="success-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h3>{{ 'contact.sentTitle' | t }}</h3>
+          <p>{{ 'contact.sentText' | t }}</p>
+        </div>
+      } @else {
+        <form (ngSubmit)="submit()">
+          @if (error()) {
+            <p class="alert alert-error">{{ error() }}</p>
+          }
+          <div class="form-row">
+            <div class="form-field">
+              <label>{{ 'common.fullName' | t }}</label>
+              <input type="text" [(ngModel)]="form.name" name="name" required />
+            </div>
+            <div class="form-field">
+              <label>{{ 'common.email' | t }}</label>
+              <input type="email" [(ngModel)]="form.email" name="email" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>{{ 'common.phone' | t }}</label>
+              <input type="tel" [(ngModel)]="form.phone" name="phone" />
+            </div>
+            <div class="form-field">
+              <label>{{ 'common.subject' | t }}</label>
+              <input type="text" [(ngModel)]="form.subject" name="subject" />
+            </div>
+          </div>
+          <div class="form-field">
+            <label>{{ 'common.message' | t }}</label>
+            <textarea rows="5" [(ngModel)]="form.message" name="message" required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" [disabled]="submitting()">
+            {{ (submitting() ? 'common.sending' : 'contact.send') | t }}
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+</section>

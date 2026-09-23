@@ -1,0 +1,49 @@
+<input #fileInput type="file" [accept]="accept" multiple (change)="onFilesSelected($event)" hidden />
+
+<div class="gallery" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" [class.is-drag]="dragOver()">
+  @for (img of images(); track img; let i = $index; let first = $first; let last = $last) {
+    <figure class="tile">
+      <img [src]="resolveImageUrl(img)" alt="" />
+      @if (first) {
+        <span class="badge">Principale</span>
+      }
+      <div class="tile-actions">
+        @if (!first) {
+          <button type="button" class="tile-btn" title="Définir comme image principale" (click)="makeMain(i)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+          </button>
+          <button type="button" class="tile-btn" title="Déplacer à gauche" (click)="move(i, -1)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+        }
+        @if (!last) {
+          <button type="button" class="tile-btn" title="Déplacer à droite" (click)="move(i, 1)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        }
+        <button type="button" class="tile-btn danger" title="Supprimer" (click)="remove(i)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </figure>
+  }
+
+  @for (p of pending(); track p.id) {
+    <figure class="tile is-pending">
+      <img [src]="p.preview" alt="" />
+      <div class="tile-overlay"><span class="spinner spinner-light"></span></div>
+    </figure>
+  }
+
+  <button type="button" class="tile add-tile" [disabled]="disabled()" (click)="fileInput.click()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+    <span>Ajouter des images</span>
+    <small>ou glissez-les ici</small>
+  </button>
+</div>
+
+<p class="gallery-hint">JPG, PNG ou WEBP · 20 Mo max par image · La première image est l'image principale.</p>
+
+@if (error()) {
+  <span class="gallery-error">{{ error() }}</span>
+}

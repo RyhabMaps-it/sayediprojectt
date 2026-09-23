@@ -1,0 +1,22 @@
+
+.contact-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.84rem;
+  color: var(--admin-ink-soft);
+}
+
+.message-cell {
+  max-width: 280px;
+  color: var(--admin-ink-soft);
+  font-size: 0.86rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+}

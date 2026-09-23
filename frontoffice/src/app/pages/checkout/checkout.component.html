@@ -1,0 +1,92 @@
+<section class="section">
+  <div class="container narrow">
+    <h1>{{ 'checkout.title' | t }}</h1>
+
+    @if (loading()) {
+      <div class="checkout-layout">
+        <div class="skeleton" style="height: 420px; border-radius: var(--radius-md);"></div>
+        <div class="skeleton" style="height: 220px; border-radius: var(--radius-md);"></div>
+      </div>
+    } @else if (orderPlaced()) {
+      <div class="card success-box">
+        <div class="success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h2>{{ 'checkout.thanks' | t }}</h2>
+        <p>{{ 'checkout.placed' | t: { number: orderPlaced() } }}</p>
+        <a routerLink="/compte" class="btn btn-primary">{{ 'checkout.viewOrders' | t }}</a>
+      </div>
+    } @else if (!cartService.cart() || cartService.cart()!.items.length === 0) {
+      <div class="card empty-state">
+        <div class="empty-state-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+        </div>
+        <p>{{ 'common.emptyCart' | t }}</p>
+        <a routerLink="/boutique" class="btn btn-primary" style="margin-top: 16px;">{{ 'common.backToShop' | t }}</a>
+      </div>
+    } @else {
+      <div class="checkout-layout">
+        <form class="card address-form" (ngSubmit)="submit()">
+          <h3>{{ 'checkout.shippingAddress' | t }}</h3>
+
+          @if (error()) {
+            <p class="alert alert-error">{{ error() }}</p>
+          }
+
+          <div class="form-field">
+            <label>{{ 'common.fullName' | t }}</label>
+            <input type="text" [(ngModel)]="address.fullName" name="fullName" required />
+          </div>
+          <div class="form-field">
+            <label>{{ 'checkout.address' | t }}</label>
+            <input type="text" [(ngModel)]="address.line1" name="line1" required />
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>{{ 'checkout.city' | t }}</label>
+              <input type="text" [(ngModel)]="address.city" name="city" required />
+            </div>
+            <div class="form-field">
+              <label>{{ 'checkout.postalCode' | t }}</label>
+              <input type="text" [(ngModel)]="address.postalCode" name="postalCode" required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label>{{ 'checkout.country' | t }}</label>
+            <input type="text" [(ngModel)]="address.country" name="country" required />
+          </div>
+          <div class="form-field">
+            <label>{{ 'common.phone' | t }}</label>
+            <input type="tel" [(ngModel)]="address.phone" name="phone" required />
+          </div>
+
+          <button class="btn btn-primary full-width" type="submit" [disabled]="submitting()">
+            {{ (submitting() ? 'checkout.validating' : 'checkout.confirm') | t }}
+          </button>
+        </form>
+
+        <aside class="card summary">
+          <h3>{{ 'checkout.summary' | t }}</h3>
+          @for (item of cartService.cart()!.items; track item.id) {
+            <div class="summary-item">
+              <img [src]="imageUrl(item.productImage)" [alt]="item.productName" />
+              <div class="summary-item-info">
+                <span class="name">{{ item.productName }}</span>
+                <span class="qty">{{ 'checkout.qty' | t: { qty: item.quantity } }}</span>
+              </div>
+              <span class="line-total">{{ item.subtotal | number: '1.0-2' }} {{ 'common.currency' | t }}</span>
+            </div>
+          }
+          <div class="summary-total">
+            <span>{{ 'common.total' | t }}</span>
+            <strong>{{ cartService.cart()!.total | number: '1.0-2' }} {{ 'common.currency' | t }}</strong>
+          </div>
+        </aside>
+      </div>
+    }
+  </div>
+</section>

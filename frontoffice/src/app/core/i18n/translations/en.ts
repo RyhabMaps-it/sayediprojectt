@@ -1,0 +1,307 @@
+import { Translations } from './types';
+
+export const en: Translations = {
+  meta: {
+    title: 'Sayadi Group - GRC Claustra Panels since 1959'
+  },
+  common: {
+    brandTagline: 'Group · Since 1959',
+    sinceEyebrow: 'Sayadi Group · Since 1959',
+    currency: 'TND',
+    fullName: 'Full name',
+    email: 'Email',
+    phone: 'Phone',
+    subject: 'Subject',
+    message: 'Message',
+    optional: '(optional)',
+    sending: 'Sending…',
+    sendingFiles: 'Uploading files…',
+    genericError: 'Something went wrong, please try again.',
+    backToShop: 'Back to the shop',
+    discoverShop: 'Browse the shop',
+    total: 'Total',
+    decrease: 'Decrease',
+    increase: 'Increase',
+    remove: 'Remove',
+    clear: 'Clear',
+    address: 'Avenue Mongi Slim, Aouina, Tunis',
+    emptyCart: 'Your cart is empty.',
+    onRequest: 'On request'
+  },
+  nav: {
+    home: 'Home',
+    shop: 'Shop',
+    quote: 'Quote',
+    appointment: 'Appointment',
+    about: 'About',
+    contact: 'Contact',
+    account: 'My account',
+    architectSpace: 'Architect area',
+    login: 'Log in',
+    logout: 'Log out',
+    cart: 'Cart',
+    menu: 'Menu',
+    language: 'Language',
+    profile: 'My profile'
+  },
+  footer: {
+    about:
+      'Since 1959, Sayadi Group has designed and manufactured decorative GRC claustra panels, combining Tunisian craftsmanship with geometric patterns inspired by Andalusian art.',
+    navigation: 'Navigation',
+    services: 'Services',
+    contact: 'Contact',
+    requestQuote: 'Request a quote',
+    bookAppointment: 'Book an appointment',
+    myOrders: 'My orders',
+    rights: '© {{year}} Sayadi Group. All rights reserved.',
+    since: 'Tunisian manufacturer since 1959'
+  },
+  productCard: {
+    view: 'View product →'
+  },
+  home: {
+    heroTitle: 'The art of claustra, carved in stone',
+    heroText:
+      'Tunisian manufacturer of decorative GRC claustra panels with geometric patterns inspired by Andalusian heritage. Facades, fences, privacy screens — made to measure for homeowners and professionals.',
+    discover: 'Discover the collection',
+    requestQuote: 'Request a quote',
+    trust: {
+      craftTitle: '1959',
+      craft: 'Tunisian artisanal know-how',
+      grcTitle: 'GRC',
+      grc: 'Glass-fibre reinforced concrete, highly durable',
+      customTitle: 'Made to measure',
+      custom: 'Sizes and colours of your choice',
+      cityTitle: 'Tunis',
+      city: 'Avenue Mongi Slim, Aouina'
+    },
+    knowhowEyebrow: 'Our craft',
+    knowhowTitle: 'GRC Claustra Panels',
+    knowhowText:
+      'Each panel is a decorative piece in its own right: openwork geometric patterns and custom finishes, designed to enhance your facades, fences and interior partitions.',
+    seeAll: 'View the whole shop',
+    cataloguesEyebrow: 'Documentation',
+    cataloguesTitle: 'Our catalogues',
+    cataloguesText: 'Browse or download our product catalogues to discover our full collection.',
+    open: 'View',
+    download: 'Download',
+    pdfBadge: 'PDF catalogue',
+    viewPdf: 'Open the PDF',
+    ctaTitle: 'An architectural or decorative project?',
+    ctaText: 'Our team works with you on the sizes, patterns and finishes that suit your project.',
+    ctaButton: 'Contact us'
+  },
+  about: {
+    eyebrow: 'Our story',
+    title: 'Sayadi Group, since 1959',
+    intro:
+      'Three generations of Tunisian craftsmanship devoted to decorative stone. Passed down from father to son, the Sayadi workshop keeps the art of claustra alive, between Andalusian tradition and contemporary standards.',
+    imgFence: 'Sayadi claustra installed as a fence',
+    imgDetail: 'Close-up of a Sayadi claustra pattern',
+    heritageTitle: 'A family heritage',
+    heritage1:
+      'Founded in 1959, Sayadi Group is now known for manufacturing decorative claustra panels in GRC (glass-fibre reinforced concrete). Inspired by Andalusian geometry and Mediterranean architecture, our patterns dress facades, fences and interiors with elegance and durability.',
+    heritage2:
+      'Every panel is made to measure: dimensions, thickness and colour adapt to your project, whether residential or architectural.',
+    statYears: 'Years of experience',
+    statGenerations: 'Generations',
+    statCustom: 'Made to measure',
+    commitmentTitle: 'Our commitment',
+    value1Title: 'Artisanal know-how',
+    value1: 'A craft handed down since 1959, combining technical precision and attention to detail.',
+    value2Title: 'Durable materials',
+    value2: 'GRC combines lightness, weather resistance and longevity, outdoors as well as indoors.',
+    value3Title: 'Made to measure',
+    value3: 'Sizes, patterns and finishes tailored to every project, residential or professional.',
+    ctaTitle: 'Would you like to visit our workshop?',
+    ctaText: 'Avenue Mongi Slim, Aouina, Tunis — by appointment.',
+    ctaButton: 'Book an appointment'
+  },
+  shop: {
+    eyebrow: 'Catalogue',
+    title: 'Our shop',
+    intro: 'Discover all our GRC claustra panels, available on quotation or to order online.',
+    search: 'Search',
+    searchPlaceholder: 'Search for a product...',
+    categories: 'Categories',
+    allCategories: 'All categories',
+    colors: 'Colours',
+    empty: 'No product matches your search.'
+  },
+  product: {
+    notFound: 'Product not found.',
+    backToShop: '← Back to the shop',
+    material: 'Material',
+    dimensions: 'Dimensions',
+    dimensionsValue: '{{h}} (H) x {{w}} (W) x {{d}} (D) cm',
+    colors: 'Colours',
+    reference: 'Reference',
+    downloadSheet: 'Download the technical sheet (pro area)',
+    downloading: 'Downloading…',
+    sheetError: 'Unable to download the technical sheet.',
+    quantity: 'Quantity',
+    addToCart: 'Add to cart',
+    adding: 'Adding…',
+    added: 'Product added to your cart.',
+    selectColor: 'Please select a colour.',
+    addError: 'Unable to add this product to your cart.',
+    quoteTitle: 'Request a quote',
+    quoteSent: 'Thank you, your request has been sent. Our team will get back to you shortly.',
+    quoteDefaultMessage: 'Hello, I would like a quote for the product "{{name}}".',
+    quoteSubject: 'Quote - {{name}}',
+    attachments: 'Photos or plans',
+    sendRequest: 'Send the request'
+  },
+  cart: {
+    title: 'My cart',
+    perUnit: '{{price}} TND / unit',
+    summary: 'Summary',
+    items: '{{count}} item(s)',
+    checkout: 'Proceed to checkout'
+  },
+  checkout: {
+    title: 'Checkout',
+    thanks: 'Thank you for your order!',
+    placed: 'Your order {{number}} has been placed. Our team will contact you about the next steps.',
+    viewOrders: 'View my orders',
+    shippingAddress: 'Shipping address',
+    address: 'Address',
+    city: 'City',
+    postalCode: 'Postcode',
+    country: 'Country',
+    defaultCountry: 'Tunisia',
+    confirm: 'Place order',
+    validating: 'Processing…',
+    summary: 'Order summary',
+    qty: 'Qty {{qty}}',
+    error: 'Unable to complete the order.'
+  },
+  account: {
+    title: 'My account',
+    becomePartner: 'Become an architect partner',
+    orders: 'My orders',
+    noOrders: "You haven't placed any orders yet.",
+    status: {
+      PENDING: 'Pending',
+      CONFIRMED: 'Confirmed',
+      PROCESSING: 'Being prepared',
+      SHIPPED: 'Shipped',
+      DELIVERED: 'Delivered',
+      CANCELLED: 'Cancelled'
+    }
+  },
+  auth: {
+    loginVisualTitle: 'Welcome to your account',
+    loginVisualText: 'Track your orders, appointments and claustra projects with ease.',
+    loginTitle: 'Log in',
+    loginSubtitle: 'Sign in to track your orders.',
+    password: 'Password',
+    loggingIn: 'Logging in…',
+    login: 'Log in',
+    noAccount: "Don't have an account yet?",
+    createAccount: 'Create an account',
+    loginError: 'Incorrect email or password.',
+    registerVisualTitle: 'Join Sayadi Group',
+    registerVisualText: 'Create your account to order online, follow your projects and access the collaboration area.',
+    registerTitle: 'Create an account',
+    registerSubtitle: 'Join Sayadi Group to order online.',
+    firstName: 'First name',
+    lastName: 'Last name',
+    creating: 'Creating…',
+    register: 'Create my account',
+    close: 'Close',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
+    haveAccount: 'Already have an account?',
+    registerError: 'Unable to create the account.'
+  },
+  contact: {
+    eyebrow: 'Contact',
+    title: "Let's talk about your project",
+    intro: 'A question, a custom project or a quote request? Our team will get back to you quickly.',
+    address: 'Address',
+    sentTitle: 'Message sent',
+    sentText: 'Thank you for your message, we will reply as soon as possible.',
+    send: 'Send message'
+  },
+  quote: {
+    eyebrow: 'Free quote',
+    title: 'Request a quote',
+    intro:
+      'Our GRC panels, marble elements, fireplaces and claddings are all made to measure. Tell us about your project and we will come back to you with a tailored proposal.',
+    sentTitle: 'Request sent',
+    sentText: 'Thank you, your quote request has been sent. Our team will get back to you shortly.',
+    subjectPlaceholder: 'e.g. Claustra for a 12 m fence',
+    details: 'Project details',
+    attachments: 'Photos or plans',
+    send: 'Send my quote request'
+  },
+  appointment: {
+    eyebrow: 'Showroom',
+    title: 'Book an appointment',
+    intro:
+      'Visit our workshop in Aouina, Tunis, to discover our GRC claustra panels and discuss your project with our team. Open Monday to Saturday, 9am-5pm.',
+    sentTitle: 'Appointment requested',
+    sentText: 'Your appointment request has been recorded. We will confirm the time slot by email.',
+    date: 'Preferred date',
+    time: 'Time slot',
+    chooseTime: 'Choose a time',
+    messageOptional: 'Message (optional)',
+    attachments: 'Photos or plans of your project',
+    send: 'Confirm appointment request'
+  },
+  collaboration: {
+    eyebrow: 'Professional area',
+    title: 'Become an architect partner',
+    intro:
+      'Architects, decorators and building professionals: apply for partner status to enjoy preferential pricing and access to our products’ technical sheets.',
+    newRequest: 'New request',
+    sentTitle: 'Request sent',
+    sentText: 'Your request has been sent. Our team will review it and get back to you shortly.',
+    activity: 'Tell us about your business',
+    activityPlaceholder: 'Architecture firm, interior designer, construction company…',
+    attachments: 'Portfolio, references or brochure',
+    send: 'Send my request',
+    history: 'My requests',
+    status: {
+      PENDING: 'Pending',
+      ACCEPTED: 'Accepted — you are now an architect partner',
+      REJECTED: 'Declined'
+    }
+  },
+  attachments: {
+    add: 'Add photos or a plan',
+    dragHint: '— click or drag and drop',
+    hint: 'JPG, PNG, WEBP or PDF · 10 MB max · {{max}} files max',
+    uploading: 'Uploading…',
+    added: 'Added',
+    remove: 'Remove',
+    tooMany: '{{max}} files maximum.',
+    badType: '{{name}}: format not accepted (JPG, PNG, WEBP or PDF).',
+    tooBig: '{{name}}: file too large (10 MB maximum).',
+    failed: '{{name}}: upload failed, please try again.'
+  },
+  viewer: {
+    back: 'Back',
+    page: 'Page {{current}} / {{total}}',
+    pages: 'Pages {{from}}–{{to}} / {{total}}',
+    fullscreen: 'Full screen',
+    exitFullscreen: 'Exit full screen',
+    loading: 'Opening the catalogue…',
+    notFound: 'This catalogue does not exist or has been removed.',
+    error: 'This catalogue cannot be displayed here.',
+    openPdf: 'Open the PDF',
+    backHome: 'Back to home',
+    prev: 'Previous page',
+    next: 'Next page',
+    hint: 'Click or swipe to turn the pages · double-click to zoom',
+    goTo: 'Go to page',
+    zoomIn: 'Zoom in',
+    zoomOut: 'Zoom out',
+    resetZoom: 'Actual size (100%)'
+  },
+  notFound: {
+    text: 'This page does not exist.',
+    back: 'Back to home'
+  }
+};

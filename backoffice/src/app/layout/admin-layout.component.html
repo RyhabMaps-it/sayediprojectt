@@ -1,0 +1,85 @@
+<div class="admin-shell">
+  <aside class="admin-sidebar" [class.open]="sidebarOpen()">
+    <div class="sidebar-brand">
+      <img src="/images/sayadi-logo.png" alt="Sayadi Group" />
+      <div>
+        <strong>Sayadi</strong>
+        <span>Back-office</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="sidebar-section-label">Général</span>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeSidebar()">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>
+        <span>Tableau de bord</span>
+      </a>
+
+      <span class="sidebar-section-label">Catalogue</span>
+      <a routerLink="/produits" routerLinkActive="active" (click)="closeSidebar()">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span>
+        <span>Produits</span>
+      </a>
+      <a routerLink="/couleurs" routerLinkActive="active" (click)="closeSidebar()">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="16" cy="12" r="1.3" fill="currentColor"/><circle cx="8" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="16" r="1.3" fill="currentColor"/></svg></span>
+        <span>Couleurs</span>
+      </a>
+      <a routerLink="/catalogues" routerLinkActive="active" (click)="closeSidebar()">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg></span>
+        <span>Catalogues</span>
+      </a>
+
+      <span class="sidebar-section-label">Activité</span>
+      <a routerLink="/devis" routerLinkActive="active" (click)="closeSidebar()">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg></span>
+        <span>Devis</span>
+      </a>
+      <a routerLink="/rendez-vous" routerLinkActive="active" (click)="closeSidebar()">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+        <span>Rendez-vous</span>
+      </a>
+      <a routerLink="/collaborations" routerLinkActive="active" (click)="closeSidebar()">
+        <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 13.5 4 18l2 2 4.5-4.5"/><path d="m11 11 5-5a2.5 2.5 0 0 1 3.5 3.5l-5 5"/><path d="m14 8 2 2"/></svg></span>
+        <span>Collaborations</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="/" class="back-to-site">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        Retour au site
+      </a>
+    </div>
+  </aside>
+
+  @if (sidebarOpen()) {
+    <div class="sidebar-scrim" (click)="closeSidebar()"></div>
+  }
+
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="menu-toggle" (click)="toggleSidebar()" aria-label="Menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <div class="topbar-spacer"></div>
+
+      <div class="admin-user">
+        <span class="admin-user-avatar">{{ authService.currentUser()?.firstName?.charAt(0) }}{{ authService.currentUser()?.lastName?.charAt(0) }}</span>
+        <span class="admin-user-name">
+          {{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName }}
+          <small>Administrateur</small>
+        </span>
+        <span class="admin-user-divider"></span>
+        <button class="btn btn-sm btn-ghost logout-btn" (click)="logout()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+          <span>Déconnexion</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

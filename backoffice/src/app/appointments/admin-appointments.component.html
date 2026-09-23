@@ -1,0 +1,80 @@
+<div class="page-head">
+  <div>
+    <h1>Rendez-vous</h1>
+    <p>Demandes de rendez-vous prises depuis le site.</p>
+  </div>
+</div>
+
+@if (loading()) {
+  <div class="admin-table-wrap">
+    <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+      @for (i of [1,2,3,4]; track i) {
+        <div class="skeleton" style="height: 44px;"></div>
+      }
+    </div>
+  </div>
+} @else if (sorted().length === 0) {
+  <div class="admin-table-wrap">
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      </div>
+      <p>Aucun rendez-vous pour le moment.</p>
+    </div>
+  </div>
+} @else {
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Contact</th>
+          <th>Date & heure</th>
+          <th>Message</th>
+          <th>Pièces jointes</th>
+          <th>Statut</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (apt of sorted(); track apt.id) {
+          <tr>
+            <td><strong>{{ apt.name }}</strong></td>
+            <td>
+              <div class="contact-cell">
+                <span>{{ apt.email }}</span>
+                @if (apt.phone) { <span>{{ apt.phone }}</span> }
+              </div>
+            </td>
+            <td>{{ apt.date }} &middot; {{ apt.time }}</td>
+            <td class="message-cell" [title]="apt.message || ''">{{ apt.message || '—' }}</td>
+            <td><app-attachment-thumbs [files]="apt.attachments" size="sm" /></td>
+            <td>
+              <span class="admin-badge" [ngClass]="{
+                'admin-badge--warning': apt.status === 'PENDING',
+                'admin-badge--success': apt.status === 'CONFIRMED',
+                'admin-badge--danger': apt.status === 'CANCELLED'
+              }">{{ apt.status }}</span>
+            </td>
+            <td>
+              @if (confirmDeleteId() === apt.id) {
+                <div class="row-actions">
+                  <button class="admin-btn-icon danger" (click)="confirmDelete(apt.id)" [disabled]="deletingId() === apt.id" title="Confirmer">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+                  </button>
+                  <button class="admin-btn-icon" (click)="cancelDelete()" title="Annuler">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              } @else {
+                <button class="admin-btn-icon danger" (click)="askDelete(apt.id)" title="Supprimer">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

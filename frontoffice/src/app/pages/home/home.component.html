@@ -1,0 +1,135 @@
+<section class="hero">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline [poster]="heroImage">
+      <source src="/videos/atelier-sayadi.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="container hero-content">
+    <span class="eyebrow">{{ 'common.sinceEyebrow' | t }}</span>
+    <h1>{{ 'home.heroTitle' | t }}</h1>
+    <p>{{ 'home.heroText' | t }}</p>
+    <div class="hero-actions">
+      <a routerLink="/boutique" class="btn btn-primary">{{ 'home.discover' | t }}</a>
+      <a routerLink="/contact" class="btn btn-outline btn-light">{{ 'home.requestQuote' | t }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section trust-strip">
+  <div class="container trust-grid">
+    <div class="trust-item" appReveal>
+      <strong>{{ 'home.trust.craftTitle' | t }}</strong>
+      <span>{{ 'home.trust.craft' | t }}</span>
+    </div>
+    <div class="trust-item" appReveal [revealDelay]="100">
+      <strong>{{ 'home.trust.grcTitle' | t }}</strong>
+      <span>{{ 'home.trust.grc' | t }}</span>
+    </div>
+    <div class="trust-item" appReveal [revealDelay]="200">
+      <strong>{{ 'home.trust.customTitle' | t }}</strong>
+      <span>{{ 'home.trust.custom' | t }}</span>
+    </div>
+    <div class="trust-item" appReveal [revealDelay]="300">
+      <strong>{{ 'home.trust.cityTitle' | t }}</strong>
+      <span>{{ 'home.trust.city' | t }}</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow" style="display:block; text-align:center;" appReveal>{{ 'home.knowhowEyebrow' | t }}</span>
+    <h2 class="section-title" appReveal [revealDelay]="80">{{ 'home.knowhowTitle' | t }}</h2>
+    <p class="section-subtitle" appReveal [revealDelay]="160">{{ 'home.knowhowText' | t }}</p>
+
+    @if (loading()) {
+      <div class="product-grid">
+        @for (i of [1,2,3,4]; track i) {
+          <div class="skeleton" style="height: 320px; border-radius: var(--radius-md);"></div>
+        }
+      </div>
+    } @else {
+      <div class="product-grid">
+        @for (product of featuredProducts(); track product.id; let i = $index) {
+          <app-product-card [product]="product" appReveal [revealDelay]="(i % 4) * 110"></app-product-card>
+        }
+      </div>
+    }
+
+    <div class="see-all" appReveal>
+      <a routerLink="/boutique" class="btn btn-outline">{{ 'home.seeAll' | t }}</a>
+    </div>
+  </div>
+</section>
+
+@if (!cataloguesLoading() && catalogues().length > 0) {
+  <section class="section catalogues-section">
+    <div class="catalogues-pattern" aria-hidden="true"></div>
+    <div class="container">
+      <div class="catalogues-head" appReveal>
+        <span class="eyebrow">{{ 'home.cataloguesEyebrow' | t }}</span>
+        <h2 class="section-title">{{ 'home.cataloguesTitle' | t }}</h2>
+        <span class="title-ornament" aria-hidden="true"><span></span></span>
+        <p class="section-subtitle">{{ 'home.cataloguesText' | t }}</p>
+      </div>
+
+      <div class="catalogue-grid">
+        @for (catalogue of catalogues(); track catalogue.id; let i = $index) {
+          <article class="catalogue" appReveal [revealDelay]="i * 120">
+            <a
+              class="book"
+              [routerLink]="['/catalogues', catalogue.id]"
+              [attr.aria-label]="catalogue.title + ' — ' + ('home.open' | t)"
+            >
+              <span class="book-pages" aria-hidden="true"></span>
+              <span class="book-cover">
+                @if (catalogue.coverImageUrl) {
+                  <img [src]="resolveImageUrl(catalogue.coverImageUrl)" [alt]="catalogue.title" loading="lazy" />
+                } @else {
+                  <span class="generated-cover">
+                    <span class="generated-pattern" aria-hidden="true"></span>
+                    <span class="generated-brand">Sayadi Group</span>
+                    <span class="generated-title">{{ catalogue.title }}</span>
+                    <span class="generated-rule" aria-hidden="true"></span>
+                  </span>
+                }
+                <span class="book-spine" aria-hidden="true"></span>
+                <span class="book-shine" aria-hidden="true"></span>
+                <span class="pdf-badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+                  PDF
+                </span>
+              </span>
+            </a>
+
+            <div class="catalogue-meta">
+              <span class="catalogue-kicker">{{ 'home.pdfBadge' | t }}</span>
+              <h3 class="catalogue-title">{{ catalogue.title }}</h3>
+              <div class="catalogue-actions">
+                <a class="action action-primary" [routerLink]="['/catalogues', catalogue.id]">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  {{ 'home.open' | t }}
+                </a>
+                <a class="action" [href]="resolveImageUrl(catalogue.fileUrl)" [attr.download]="catalogue.title + '.pdf'" target="_blank" rel="noopener">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+                  {{ 'home.download' | t }}
+                </a>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<section class="section cta-banner reveal-scale" appReveal>
+  <div class="container cta-inner">
+    <div>
+      <h2>{{ 'home.ctaTitle' | t }}</h2>
+      <p>{{ 'home.ctaText' | t }}</p>
+    </div>
+    <a routerLink="/contact" class="btn btn-gold">{{ 'home.ctaButton' | t }}</a>
+  </div>
+</section>

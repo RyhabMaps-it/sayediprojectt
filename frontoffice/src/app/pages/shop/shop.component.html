@@ -1,0 +1,96 @@
+<section class="shop-header">
+  <div class="container">
+    <span class="eyebrow">{{ 'shop.eyebrow' | t }}</span>
+    <h1>{{ 'shop.title' | t }}</h1>
+    <p>{{ 'shop.intro' | t }}</p>
+  </div>
+</section>
+
+<section class="section shop-body">
+  <div class="container layout">
+    <aside class="filters">
+      <div class="filter-card">
+        <h4>{{ 'shop.search' | t }}</h4>
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input
+            type="text"
+            [placeholder]="'shop.searchPlaceholder' | t"
+            [(ngModel)]="searchTerm"
+            (keyup.enter)="onSearch()"
+          />
+          @if (searchTerm) {
+            <button type="button" class="clear-search" (click)="clearSearch()" [attr.aria-label]="'common.clear' | t">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          }
+        </div>
+
+        <h4>{{ 'shop.categories' | t }}</h4>
+        <ul class="category-list">
+          <li>
+            <button [class.active]="activeCategory() === null" (click)="selectCategory(null)">
+              {{ 'shop.allCategories' | t }}
+            </button>
+          </li>
+          @for (cat of categories(); track cat.id) {
+            <li>
+              <button [class.active]="activeCategory() === cat.slug" (click)="selectCategory(cat.slug)">
+                {{ cat.name }}
+              </button>
+            </li>
+          }
+        </ul>
+
+        @if (colors().length > 0) {
+          <h4>{{ 'shop.colors' | t }}</h4>
+          <div class="color-filter">
+            @for (color of colors(); track color.id) {
+              <button
+                type="button"
+                class="swatch"
+                [class.active]="selectedColorIds().includes(color.id)"
+                [style.background]="color.code"
+                [title]="color.name"
+                (click)="toggleColor(color.id)"
+              ></button>
+            }
+          </div>
+        }
+      </div>
+    </aside>
+
+    <div class="results">
+      @if (loading()) {
+        <div class="product-grid">
+          @for (i of [1,2,3,4,5,6]; track i) {
+            <div class="skeleton" style="height: 320px; border-radius: var(--radius-md);"></div>
+          }
+        </div>
+      } @else if (filteredProducts().length === 0) {
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <p>{{ 'shop.empty' | t }}</p>
+        </div>
+      } @else {
+        <div class="product-grid">
+          @for (product of filteredProducts(); track product.id) {
+            <app-product-card [product]="product"></app-product-card>
+          }
+        </div>
+
+        @if (totalPages() > 1) {
+          <div class="pagination">
+            @for (p of pageNumbers(); track p) {
+              <button [class.active]="page() === p" (click)="goToPage(p)">
+                {{ p + 1 }}
+              </button>
+            }
+          </div>
+        }
+      }
+    </div>
+  </div>
+</section>

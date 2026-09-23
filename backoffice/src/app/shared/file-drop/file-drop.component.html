@@ -1,0 +1,83 @@
+<input #fileInput type="file" [accept]="accept" (change)="onFileSelected($event)" hidden />
+
+@if (value() || uploading()) {
+  <div class="drop-filled" [class.compact]="compact" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" [class.is-drag]="dragOver()">
+    @if (kind === 'image') {
+      <div class="thumb">
+        @if (previewSrc) {
+          <img [src]="previewSrc" alt="" />
+        }
+        @if (uploading()) {
+          <div class="thumb-overlay"><span class="spinner spinner-light"></span></div>
+        }
+      </div>
+    } @else {
+      <div class="pdf-icon">
+        @if (uploading()) {
+          <span class="spinner"></span>
+        } @else {
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+        }
+      </div>
+    }
+
+    <div class="meta">
+      <span class="meta-title">
+        @if (uploading()) {
+          Envoi en cours…
+        } @else {
+          {{ kind === 'pdf' ? 'Document PDF prêt' : 'Image prête' }}
+        }
+      </span>
+      @if (fileName()) {
+        <span class="meta-sub">{{ fileName() }}</span>
+      } @else if (!uploading()) {
+        <span class="meta-sub">Glissez un autre fichier ici pour le remplacer</span>
+      }
+    </div>
+
+    @if (!uploading()) {
+      <div class="actions">
+        @if (kind === 'pdf' && fileHref) {
+          <a class="icon-btn" [href]="fileHref" target="_blank" rel="noopener" title="Ouvrir">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </a>
+        }
+        <button type="button" class="icon-btn" title="Remplacer" [disabled]="disabled()" (click)="fileInput.click()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        </button>
+        <button type="button" class="icon-btn danger" title="Retirer" [disabled]="disabled()" (click)="clear()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      </div>
+    }
+  </div>
+} @else {
+  <button
+    type="button"
+    class="dropzone"
+    [class.compact]="compact"
+    [class.is-drag]="dragOver()"
+    [disabled]="disabled()"
+    (click)="fileInput.click()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <span class="dropzone-icon">
+      @if (kind === 'pdf') {
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3-3 3 3"/></svg>
+      } @else {
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+      }
+    </span>
+    <span class="dropzone-text">
+      <strong>Cliquez pour choisir</strong> ou glissez-déposez
+    </span>
+    <span class="dropzone-hint">{{ hint || (kind === 'pdf' ? 'PDF · 20 Mo max' : 'JPG, PNG, WEBP · 20 Mo max') }}</span>
+  </button>
+}
+
+@if (error()) {
+  <span class="drop-error">{{ error() }}</span>
+}

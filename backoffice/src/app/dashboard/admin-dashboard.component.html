@@ -1,0 +1,133 @@
+<div class="dashboard-banner">
+  <div>
+    <h1>Bonjour {{ authService.currentUser()?.firstName }} 👋</h1>
+    <p>Voici un aperçu de l'activité de Sayadi Group aujourd'hui.</p>
+  </div>
+  <div class="banner-date">
+    <span class="banner-day">{{ todayDay }}</span>
+    <span class="banner-month">{{ todayMonthLabel }}</span>
+  </div>
+</div>
+
+<div class="quick-links">
+  <a routerLink="/produits" [queryParams]="{ new: true }" class="quick-link-card">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+    <span>Nouveau produit</span>
+  </a>
+  <a routerLink="/couleurs" class="quick-link-card">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="8" r="1.3" fill="currentColor"/><circle cx="16" cy="12" r="1.3" fill="currentColor"/><circle cx="8" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="16" r="1.3" fill="currentColor"/></svg>
+    <span>Gérer les couleurs</span>
+  </a>
+  <a routerLink="/rendez-vous" class="quick-link-card">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+    <span>Rendez-vous</span>
+  </a>
+  <a routerLink="/collaborations" class="quick-link-card">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 13.5 4 18l2 2 4.5-4.5"/><path d="m11 11 5-5a2.5 2.5 0 0 1 3.5 3.5l-5 5"/><path d="m14 8 2 2"/></svg>
+    <span>Collaborations</span>
+  </a>
+</div>
+
+@if (loading()) {
+  <div class="stat-grid">
+    @for (i of [1,2,3,4]; track i) {
+      <div class="stat-card skeleton" style="height: 96px;"></div>
+    }
+  </div>
+} @else {
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-icon products">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/></svg>
+      </div>
+      <div>
+        <strong>{{ stats().productCount }}</strong>
+        <span>Produits au catalogue</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon colors">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>
+      </div>
+      <div>
+        <strong>{{ stats().colorCount }}</strong>
+        <span>Coloris disponibles</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon appointments">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+      </div>
+      <div>
+        <strong>{{ stats().pendingAppointments }}</strong>
+        <span>Rendez-vous en attente</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon collaborations">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m11 11 5-5a2.5 2.5 0 0 1 3.5 3.5l-5 5"/><path d="M8.5 13.5 4 18l2 2 4.5-4.5"/></svg>
+      </div>
+      <div>
+        <strong>{{ stats().pendingCollaborations }}</strong>
+        <span>Collaborations en attente</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-grid">
+    <div class="admin-card panel">
+      <div class="panel-head">
+        <h2>Derniers rendez-vous</h2>
+        <a routerLink="/rendez-vous">Voir tout</a>
+      </div>
+      @if (recentAppointments().length === 0) {
+        <p class="empty-state">Aucun rendez-vous pour le moment.</p>
+      } @else {
+        <ul class="mini-list">
+          @for (apt of recentAppointments(); track apt.id) {
+            <li>
+              <div>
+                <strong>{{ apt.name }}</strong>
+                <span>{{ apt.date }} &middot; {{ apt.time }}</span>
+              </div>
+              <span class="admin-badge" [ngClass]="{
+                'admin-badge--warning': apt.status === 'PENDING',
+                'admin-badge--success': apt.status === 'CONFIRMED',
+                'admin-badge--danger': apt.status === 'CANCELLED'
+              }">{{ apt.status }}</span>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <div class="admin-card panel">
+      <div class="panel-head">
+        <h2>Dernières collaborations</h2>
+        <a routerLink="/collaborations">Voir tout</a>
+      </div>
+      @if (recentCollaborations().length === 0) {
+        <p class="empty-state">Aucune demande pour le moment.</p>
+      } @else {
+        <ul class="mini-list">
+          @for (collab of recentCollaborations(); track collab.id) {
+            <li>
+              <div>
+                <strong>{{ collab.userFullName }}</strong>
+                <span>{{ collab.userEmail }}</span>
+              </div>
+              <span class="admin-badge" [ngClass]="{
+                'admin-badge--warning': collab.status === 'PENDING',
+                'admin-badge--success': collab.status === 'ACCEPTED',
+                'admin-badge--danger': collab.status === 'REJECTED'
+              }">{{ collab.status }}</span>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+}

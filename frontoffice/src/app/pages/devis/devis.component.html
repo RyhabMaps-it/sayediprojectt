@@ -1,0 +1,60 @@
+<section class="contact-hero">
+  <div class="container">
+    <span class="eyebrow">{{ 'quote.eyebrow' | t }}</span>
+    <h1>{{ 'quote.title' | t }}</h1>
+    <p>{{ 'quote.intro' | t }}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container narrow">
+    <div class="card form-card">
+      @if (sent()) {
+        <div class="success-panel">
+          <div class="success-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h3>{{ 'quote.sentTitle' | t }}</h3>
+          <p>{{ 'quote.sentText' | t }}</p>
+        </div>
+      } @else {
+        <form (ngSubmit)="submit()">
+          @if (error()) {
+            <p class="alert alert-error">{{ error() }}</p>
+          }
+          <div class="form-row">
+            <div class="form-field">
+              <label>{{ 'common.fullName' | t }}</label>
+              <input type="text" [(ngModel)]="form.name" name="name" required />
+            </div>
+            <div class="form-field">
+              <label>{{ 'common.email' | t }}</label>
+              <input type="email" [(ngModel)]="form.email" name="email" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>{{ 'common.phone' | t }}</label>
+              <input type="tel" [(ngModel)]="form.phone" name="phone" required />
+            </div>
+            <div class="form-field">
+              <label>{{ 'common.subject' | t }}</label>
+              <input type="text" [(ngModel)]="form.subject" name="subject" [placeholder]="'quote.subjectPlaceholder' | t" />
+            </div>
+          </div>
+          <div class="form-field">
+            <label>{{ 'quote.details' | t }}</label>
+            <textarea rows="5" [(ngModel)]="form.message" name="message" required></textarea>
+          </div>
+          <div class="form-field">
+            <label>{{ 'quote.attachments' | t }} <span class="optional">{{ 'common.optional' | t }}</span></label>
+            <app-attachment-drop (urlsChange)="attachments = $event" (busyChange)="uploading.set($event)" />
+          </div>
+          <button class="btn btn-primary" type="submit" [disabled]="submitting() || uploading()">
+            {{ (submitting() ? 'common.sending' : uploading() ? 'common.sendingFiles' : 'quote.send') | t }}
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+</section>
