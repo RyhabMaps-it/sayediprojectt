@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: sayadi_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sayadi_db
+      POSTGRES_USER: sayadi
+      POSTGRES_PASSWORD: sayadi
+    ports:
+      - "5432:5432"
+    volumes:
+      - sayadi_pg_data:/var/lib/postgresql/data
+
+volumes:
+  sayadi_pg_data:
